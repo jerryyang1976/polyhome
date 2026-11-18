@@ -3,16 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-store">
 <title>栖居收纳 · 全屋收纳管家</title>
 <script>
-/* 设备检测：手机访问时自动跳到手机版 */
-(function(){
-  var ua=navigator.userAgent||"";
-  var mobileUA=/Android|iPhone|iPod|Mobile/i.test(ua)||(ua.indexOf("iPad")>=0)||(navigator.maxTouchPoints>1&&window.innerWidth<900);
-  if(mobileUA&&window.innerWidth<820){
-    try{location.replace("polymobile.html");}catch(e){}
-  }
-})();
+/* 窗口宽度不够 → 跳到手机版 */
+if(window.innerWidth<768){try{location.replace("polymobile.html");}catch(e){}}
 </script>
 <style>
 :root{
