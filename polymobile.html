@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#F3F6F1">
+<title>栖居收纳 · 全屋收纳管家</title>
+<script>
+/* 设备检测：桌面设备自动跳回电脑版 */
+(function(){
+  var ua=navigator.userAgent||"";
+  var mobileUA=/Android|iPhone|iPod|Mobile/i.test(ua)||(ua.indexOf("iPad")>=0)||(navigator.maxTouchPoints>1&&window.innerWidth<900);
+  if(!mobileUA&&window.innerWidth>900){
+    try{location.replace("index.html");}catch(e){}
+  }
+})();
+</script>
+<style>
+:root{
+  --bg:#F3F6F1; --bg2:#E4EAE0; --bg3:#EAF0E6; --card:#FFFFFF;
+  --line:#DFE6DA; --ink:#313B2D; --ink2:#5D6A56; --ink3:#8D9884;
+  --accent:#6E8467; --accent-bg:#D8E1D2;
+  --red:#96674F; --red-bg:#E8D9CE;
+  --yellow:#7E7B4A; --yellow-bg:#E5E3CC;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);height:100vh;height:100dvh;display:flex;flex-direction:column;font-size:13px;overflow:hidden}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit;outline:none}
+
+header{flex-shrink:0;border-bottom:0.5px solid var(--line);background:var(--bg);padding:8px 12px 0;z-index:10}
+.hrow{display:flex;align-items:center;gap:8px}
+.logo{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:500;letter-spacing:.5px;flex:1;min-width:0}
+.logo .mark{width:20px;height:20px;border-radius:7px;background:var(--accent);flex-shrink:0}
+.logo span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hbtn{width:32px;height:32px;border-radius:10px;border:none;background:var(--bg2);font-size:14px;color:var(--ink2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hbtn.cloud-on{color:var(--accent);background:var(--accent-bg)}
+.search{width:100%;background:var(--bg2);border:none;border-radius:18px;padding:8px 14px;font-size:13px;color:var(--ink);margin:8px 0}
+.search::placeholder{color:var(--ink3)}
+#navArea{padding-bottom:6px}
+.navrow{display:flex;gap:6px;overflow-x:auto;white-space:nowrap;padding:2px 0;scrollbar-width:none}
+.navrow::-webkit-scrollbar{display:none}
+.nchip{flex-shrink:0;font-size:12px;padding:5px 13px;background:var(--bg2);border:none;border-radius:15px;color:var(--ink2);display:inline-flex;align-items:center;gap:5px}
+.nchip.active{background:var(--accent);color:#F3F6F1}
+.nchip .cdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.nchip .cnt{font-size:10px;opacity:.75}
+
+#storeWarn{flex-shrink:0;padding:0 12px}
+.store-warn{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin:6px 0;padding:9px 12px;border-radius:12px;font-size:12px;line-height:1.5;background:#E9EFE4;color:#4A5A44;border:1px solid #CBD8C1}
+.store-warn.danger{background:#F2E4DE;color:#7A4A38;border-color:#DFC4B8}
+.sw-ok{flex-shrink:0;border:1px solid #A9BAA0;background:#fff;color:#4A5A44;border-radius:999px;padding:4px 12px;font-size:12px;cursor:pointer}
+
+main{flex:1;overflow-y:auto;padding:10px 12px 120px;-webkit-overflow-scrolling:touch}
+.main-title{font-size:13px;font-weight:500;color:var(--ink2);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:560px){.grid{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--card);border:0.5px solid var(--line);border-radius:14px;padding:10px;cursor:pointer;position:relative}
+.card .ico{height:64px;border-radius:10px;background:var(--bg3);display:flex;align-items:center;justify-content:center;margin-bottom:8px;color:var(--accent);cursor:pointer}
+.card .ico.photo{padding:0;overflow:hidden;position:relative}
+.card .ico.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.card .ico .ph-cnt{position:absolute;right:5px;bottom:5px;background:rgba(49,59,45,.55);color:#fff;font-size:10px;border-radius:8px;padding:1px 6px}
+.card .nm{font-size:13px;font-weight:500;color:var(--ink);word-break:break-all;line-height:1.4}
+.card .loc{font-size:11px;color:var(--ink3);margin-top:3px}
+.badge{font-size:10px;margin-top:7px;padding:2px 9px;display:inline-block;border-radius:10px}
+.b-red{background:var(--red-bg);color:var(--red)}
+.b-yellow{background:var(--yellow-bg);color:var(--yellow)}
+.b-ok{background:#E3EBDD;color:var(--accent)}
+.add-card{border:0.5px dashed #B9C5B0;border-radius:14px;padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--ink3);font-size:12px;min-height:130px;gap:4px;cursor:pointer;background:transparent}
+.add-card .plus{font-size:20px;color:#A6B19D}
+.empty{color:var(--ink3);font-size:12px;text-align:center;padding:60px 0}
+
+/* 底部效期提醒条 */
+#warnBar{position:fixed;left:0;right:0;bottom:0;background:var(--bg2);border-top:0.5px solid var(--line);padding:9px 12px;display:flex;gap:7px;align-items:center;font-size:12px;overflow-x:auto;white-space:nowrap;z-index:8}
+.wlabel{color:var(--ink3);font-size:11px;flex-shrink:0}
+.wchip{padding:3px 10px;border-radius:10px;background:#fff;font-size:11px;cursor:pointer;flex-shrink:0}
+.wchip.red{color:var(--red)}
+.wchip.yellow{color:var(--yellow)}
+.fab{position:fixed;right:14px;bottom:52px;width:52px;height:52px;border-radius:50%;background:var(--accent);color:#F3F6F1;border:none;font-size:24px;line-height:1;box-shadow:0 4px 14px rgba(110,132,103,.4);z-index:9;display:flex;align-items:center;justify-content:center}
+
+/* 底部抽屉弹窗 */
+.mask{position:fixed;inset:0;background:rgba(49,59,45,.32);display:flex;align-items:flex-end;justify-content:center;z-index:50;animation:fadein .15s}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.dialog{background:#fff;border-radius:18px 18px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom));width:100%;max-width:560px;max-height:88vh;overflow-y:auto;animation:slideup .2s}
+@keyframes slideup{from{transform:translateY(40px);opacity:.5}to{transform:translateY(0);opacity:1}}
+.dlg-title{font-size:14px;font-weight:500;margin-bottom:12px}
+.fld{margin-bottom:11px}
+.fld label{font-size:11px;color:var(--ink2);display:block;margin-bottom:4px}
+.fld input[type=text],.fld input[type=number],.fld input[type=date],.fld select,.fld textarea{width:100%;font-size:14px;padding:9px 11px;background:var(--bg);border:none;border-radius:10px;color:var(--ink)}
+.fld textarea{resize:vertical;min-height:44px}
+.fld .hint{font-size:10px;color:var(--ink3);margin-top:3px}
+.row{display:flex;gap:8px}
+.row>*{flex:1}
+.tag{font-size:11px;padding:4px 10px;background:var(--bg2);border-radius:12px;color:var(--ink);display:inline-flex;align-items:center;gap:5px;margin:0 6px 6px 0}
+.tag button{border:none;background:none;color:var(--ink3);font-size:10px;padding:0;line-height:1}
+.tag-add{font-size:12px;padding:4px 10px;border:0.5px dashed #B9C5B0;border-radius:12px;color:var(--ink3);background:none}
+.swatches{display:flex;gap:10px;flex-wrap:wrap}
+.sw{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid transparent}
+.sw.sel{border-color:var(--ink)}
+.icon-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;max-height:36vh;overflow-y:auto}
+.icell{height:42px;background:var(--bg);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink2);border:none}
+.icell.sel{background:var(--accent-bg);color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.dlg-btns{display:flex;gap:8px;margin-top:14px}
+.dlg-btns button{flex:1;font-size:13px;padding:10px 14px;border:none;border-radius:12px}
+.btn-cancel{background:var(--bg2);color:var(--ink2)}
+.btn-ok{background:var(--accent);color:#F3F6F1}
+.btn-danger{background:var(--red);color:#fff}
+.cur-icon{width:56px;height:56px;border-radius:10px;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--accent);cursor:pointer;margin-bottom:4px}
+.confirm-msg{font-size:13px;color:var(--ink2);line-height:1.7;padding:4px 0 8px}
+
+/* 照片 */
+.ph-edit{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:7px}
+.ph-thumbs{display:flex;flex-wrap:wrap;gap:7px}
+.ph-thumb{width:52px;height:52px;border-radius:9px;object-fit:cover;cursor:pointer;border:0.5px solid var(--line)}
+.ph-thumb.cur{box-shadow:0 0 0 2px var(--accent)}
+.ph-del{position:relative}
+.ph-del button{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:6px;border:none;background:rgba(49,59,45,.55);color:#fff;font-size:9px;line-height:1;cursor:pointer}
+.pv-main{background:var(--bg);border-radius:12px;display:flex;align-items:center;justify-content:center;min-height:200px;margin-bottom:10px;overflow:hidden}
+.pv-main img{max-width:100%;max-height:44vh;display:block}
+.pv-nav{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px}
+.pv-nav button{border:none;background:var(--bg2);border-radius:9px;padding:6px 16px;font-size:13px;color:var(--ink2)}
+.pv-nav button:disabled{opacity:.4;cursor:default}
+
+/* 管理菜单 */
+.mg-sec{font-size:11px;color:var(--ink3);letter-spacing:1px;padding:10px 2px 6px}
+.mg-item{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--bg);border-radius:10px;margin-bottom:5px;font-size:13px;color:var(--ink)}
+.mg-item:active{background:var(--bg2)}
+.mg-item .ops{display:flex;gap:6px}
+.mg-item .ops button{width:26px;height:26px;border-radius:8px;background:#fff;border:none;font-size:11px;color:var(--ink2);display:flex;align-items:center;justify-content:center}
+.mg-item .ops button.del{color:var(--red)}
+.mg-item .cat-dot{width:8px;height:8px;border-radius:50%;margin-right:6px;display:inline-block}
+.mg-act{display:flex;gap:8px;flex-wrap:wrap;padding-top:6px}
+.mg-act button{flex:1;min-width:100px;font-size:12px;padding:9px;background:var(--bg);border:none;border-radius:10px;color:var(--ink2)}
+::-webkit-scrollbar{width:0;height:0}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hrow">
+    <div class="logo"><div class="mark"></div><span id="appTitle">栖居收纳</span></div>
+    <button class="hbtn" data-act="cloud-settings" id="cloudBtn" title="云同步设置">☁</button>
+    <button class="hbtn" data-act="menu-open" title="菜单">☰</button>
+  </div>
+  <input id="searchBox" class="search" type="text" placeholder="搜索物品、位置、备注…">
+  <div id="navArea">
+    <div class="navrow" id="roomChips"></div>
+    <div class="navrow" id="catChips"></div>
+  </div>
+</header>
+<div id="storeWarn"></div>
+
+<main>
+  <div class="main-title"><span id="mainTitle">全屋总览</span><span id="cloudStat" style="font-size:10px;font-weight:400;color:#8D9884">☁ 未配置</span></div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<div class="fab" data-act="item-add">＋</div>
+<footer id="warnBar"></footer>
+<div id="modalRoot"></div>
+<input type="file" id="importFile" accept=".json" hidden>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+"use strict";
+/* ================= 数据 ================= */
+const KEY="home_storage_v1";
+let db=null;
+const view={room:"all",cat:null,storage:null,filter:"all",search:""};
+
+function uid(p){return (p||"id")+"_"+Math.random().toString(36).slice(2,9);}
+function todayOffset(days){const d=new Date();d.setDate(d.getDate()+days);
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function daysLeft(dateStr){if(!dateStr)return null;
+  const t=new Date(dateStr+"T23:59:59").getTime();
+  return Math.ceil((t-Date.now())/86400000);}
+
+function seed(){
+  const r1=uid("r"),r2=uid("r"),r3=uid("r"),r4=uid("r"),r5=uid("r");
+  const st={};
+  const rooms=[
+    {id:r1,name:"厨房",storages:[{id:uid("s"),name:"冰箱冷藏室"},{id:uid("s"),name:"冰箱门架"},{id:uid("s"),name:"调味柜"},{id:uid("s"),name:"橱柜下层"}]},
+    {id:r2,name:"客厅",storages:[{id:uid("s"),name:"电视柜"},{id:uid("s"),name:"茶几抽屉"}]},
+    {id:r3,name:"卧室",storages:[{id:uid("s"),name:"衣柜"},{id:uid("s"),name:"床头柜"}]},
+    {id:r4,name:"卫生间",storages:[{id:uid("s"),name:"药箱"},{id:uid("s"),name:"洗手台"}]},
+    {id:r5,name:"储物间",storages:[{id:uid("s"),name:"货架A"},{id:uid("s"),name:"货架B"}]}
+  ];
+  st[r1]=rooms[0].storages; st[r4]=rooms[3].storages; st[r5]=rooms[4].storages;
+  const cats=[
+    {id:"food",name:"食品饮品",color:"#A8B08A"},
+    {id:"med",name:"药品保健",color:"#6E8467"},
+    {id:"daily",name:"日用品",color:"#9AA894"},
+    {id:"cloth",name:"衣物被褥",color:"#B3B89A"},
+    {id:"tool",name:"工具数码",color:"#84968C"}
+  ];
+  const it=(name,qty,unit,roomId,storageId,catId,exp,icon,note)=>({id:uid("i"),name,qty,unit,roomId,storageId,categoryId:catId,expiry:exp,icon,note:note||""});
+  const items=[
+    it("鲜牛奶 1L",1,"盒",r1,st[r1][0].id,"food",todayOffset(1),"milk"),
+    it("鸡蛋",10,"枚",r1,st[r1][1].id,"food",todayOffset(5),"egg"),
+    it("阿莫西林胶囊",2,"盒",r4,st[r4][0].id,"med",todayOffset(28),"capsule"),
+    it("碘伏消毒液",1,"瓶",r4,st[r4][0].id,"med",todayOffset(17),"spray"),
+    it("大米 5kg",1,"袋",r1,st[r1][3].id,"food",null,"rice"),
+    it("生抽 500ml",1,"瓶",r1,st[r1][2].id,"food",todayOffset(120),"drop"),
+    it("洗发水",1,"瓶",r4,st[r4][1].id,"daily",null,"soap"),
+    it("换季衣物箱",1,"个",r5,st[r5][1].id,"cloth",null,"box")
+  ];
+  return {rooms,cats,items};
+}
+function load(){
+  try{const raw=localStorage.getItem(KEY);if(raw){const d=JSON.parse(raw);
+    if(d&&Array.isArray(d.items))return d;}}catch(e){}
+  return null;
+}
+/* ================= 云端同步（Supabase，与电脑版共用同一份数据） ================= */
+var SB_URL="";
+var SB_KEY="";
+var cloudClient=null,cloudTimer=null,pushing=false;
+
+function sbConfig(){
+  let url=SB_URL,key=SB_KEY;
+  try{url=localStorage.getItem(KEY+"_sburl")||url;key=localStorage.getItem(KEY+"_sbkey")||key;}catch(e){}
+  url=(url||"").trim();key=(key||"").trim();
+  return (url&&key&&url.indexOf("http")===0&&key.length>20)?{url:url,key:key}:null;
+}
+function cloudReady(){return !!cloudClient;}
+function cloudInit(){
+  const c=sbConfig();
+  if(!c){cloudClient=null;return false;}
+  try{cloudClient=window.supabase.createClient(c.url,c.key);return true;}
+  catch(e){cloudClient=null;return false;}
+}
+var lastWrite=null;
+function fmtClock(d){return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")+":"+String(d.getSeconds()).padStart(2,"0");}
+function setCloudStat(txt){const b=document.getElementById("cloudStat");if(b)b.textContent=txt;
+  const c=document.getElementById("cloudBtn");if(c)c.classList.toggle("cloud-on",cloudReady());}
+function save(){
+  try{localStorage.setItem(KEY,JSON.stringify(db));}
+  catch(e){showStoreWarn("⚠ 本地缓存写入失败（照片较多时易触发）。云端同步不受影响。",true);}
+  if(cloudReady()){clearTimeout(cloudTimer);cloudTimer=setTimeout(cloudPush,800);}
+}
+db=load()||seed(); if(!load())save();
+
+function showStoreWarn(html,danger,extraBtn){
+  const el=document.getElementById("storeWarn");
+  if(!el)return;
+  el.innerHTML='<div class="store-warn '+(danger?"danger":"")+'"><span>'+html+'</span>'
+    +(extraBtn!==undefined?extraBtn:(danger?"":'<button class="sw-ok" data-act="store-hint-ok">知道了</button>'))+'</div>';
+}
+
+async function cloudPush(attempt){
+  if(!cloudClient)return;
+  attempt=attempt||0;
+  if(pushing)return;
+  pushing=true;
+  try{
+    const {error}=await cloudClient.from("home_storage")
+      .upsert({id:"main",data:db,updated_at:new Date().toISOString()});
+    if(error)throw error;
+    lastWrite=new Date();
+    setCloudStat("☁ 已同步 "+fmtClock(lastWrite));
+    const el=document.getElementById("storeWarn");
+    if(el&&el.innerHTML.indexOf("云端同步失败")>=0)el.innerHTML="";
+  }catch(e){
+    if(attempt<2){setTimeout(()=>cloudPush(attempt+1),[1000,3000][attempt]);return;}
+    setCloudStat("☁ 同步失败");
+    showStoreWarn("⚠ 云端同步失败："+esc(e.message||e)+"。数据已暂存本机。",true,
+      '<button class="sw-ok" data-act="cloud-push">立即同步</button>');
+  }finally{pushing=false;}
+}
+async function cloudPull(needRender){
+  if(!cloudClient)return null;
+  const {data,error}=await cloudClient.from("home_storage")
+    .select("data,updated_at").eq("id","main").maybeSingle();
+  if(error)throw error;
+  if(data&&data.data&&Array.isArray(data.data.items)&&Array.isArray(data.data.rooms)){
+    db=data.data;if(needRender)render();return data;
+  }
+  return null;
+}
+function mergeItems(d){
+  let added=0,skipped=0;
+  d.items.forEach(it=>{
+    if(dupCheck(it.name,null)){skipped++;return;}
+    const cat=db.cats.some(c=>c.id===it.categoryId)?it.categoryId:db.cats[0].id;
+    db.items.push({
+      id:it.id||uid("i"),
+      name:it.name||"未命名物品",
+      qty:it.qty!=null?it.qty:null,
+      unit:it.unit||"",
+      roomId:null,storageId:null,
+      categoryId:cat,
+      expiry:it.expiry||null,
+      note:it.note||"",
+      icon:ICONS[it.icon]?it.icon:matchIcon(it.name||"",cat),
+      photos:Array.isArray(it.photos)?it.photos.filter(p=>typeof p==="string"&&p.indexOf("data:image")===0).slice(0,9):[]
+    });
+    added++;
+  });
+  return {added,skipped};
+}
+
+/* 云同步设置弹窗 */
+function openCloudSettings(){
+  const c=sbConfig();
+  openModal('<div class="dlg-title">☁ 云同步设置（Supabase）</div>'
+    +'<div class="fld"><label>项目地址（Project URL）</label><input type="text" id="sb_url" value="'+esc(c?c.url:"")+'" placeholder="https://xxxx.supabase.co"></div>'
+    +'<div class="fld"><label>anon public key</label><input type="text" id="sb_key" value="'+esc(c?c.key:"")+'" placeholder="eyJhbGciOi...（anon public）"></div>'
+    +'<div class="fld" style="font-size:12px;color:#6B6960;line-height:1.7">获取：supabase.com → 项目 → Settings → API。<br>手机版与电脑版共用同一份云端数据，配置一致。</div>'
+    +'<div class="dlg-btns"><button class="btn-cancel" data-act="close-modal">取消</button><button class="btn-cancel" data-act="cloud-test">测试</button><button class="btn-ok" data-act="cloud-save">保存</button></div>');
+}
+function readCfgInputs(){
+  const url=document.getElementById("sb_url").value.trim();
+  const key=document.getElementById("sb_key").value.trim();
+  if(!(url&&key&&url.indexOf("http")===0&&key.length>20)){
+    showStoreWarn("请填写有效的项目地址（https://开头）和 anon key。",true);return null;
+  }
+  return {url:url,key:key};
+}
+async function cloudTestConn(){
+  const c=readCfgInputs();if(!c)return;
+  try{
+    const t=window.supabase.createClient(c.url,c.key);
+    const {error}=await t.from("home_storage").select("id").limit(1);
+    if(error)throw error;
+    showStoreWarn("✓ 连接成功，数据表可用。点「保存」生效。");
+  }catch(e){
+    showStoreWarn("✗ 连接失败："+esc(e.message||e)
+      +(String(e.message||e).indexOf("does not exist")>=0||String(e.code||"")==="PGRST205"?"<br>数据表不存在——请先在电脑版环境执行建表 SQL。":""),true);
+  }
+}
+function cloudSaveCfg(){
+  const c=readCfgInputs();if(!c)return;
+  try{localStorage.setItem(KEY+"_sburl",c.url);localStorage.setItem(KEY+"_sbkey",c.key);
+    localStorage.setItem(KEY+"_sbhintDone","1");}catch(e){}
+  closeModal();
+  cloudInit();
+  setCloudStat("☁ 连接中…");
+  cloudStartup();
+}
+
+async function cloudStartup(){
+  if(!cloudInit()){
+    setCloudStat("☁ 未配置");
+    try{if(!localStorage.getItem(KEY+"_sbhintDone")){
+      showStoreWarn("欢迎使用云同步版：数据保存在 Supabase 云数据库，手机/电脑打开都是同一份。<br>首次使用请点右上角 ☁ 填入项目地址和 anon key（与电脑版共用）。");
+    }}catch(e){}
+    return;
+  }
+  setCloudStat("☁ 连接中…");
+  try{
+    const row=await cloudPull(false);
+    if(row){
+      save();
+      setCloudStat("☁ 已同步");
+      render();
+    }else{
+      await cloudPush();
+    }
+  }catch(e){
+    setCloudStat("☁ 连接失败");
+    showStoreWarn("⚠ 连接 Supabase 失败："+esc(e.message||e)+"。当前显示的是本机缓存数据。",true,
+      '<button class="sw-ok" data-act="cloud-push">重试</button>');
+  }
+}
+cloudStartup();
+
+function getRoom(id){return db.rooms.find(r=>r.id===id);}
+function getCat(id){return db.cats.find(c=>c.id===id);}
+function getStorage(room,sid){return room?room.storages.find(s=>s.id===sid):null;}
+function locationText(it){
+  const r=getRoom(it.roomId);
+  if(!r)return "未分配";
+  const s=getStorage(r,it.storageId);
+  return s?r.name+" · "+s.name:r.name;
+}
+
+/* ================= 图标库 ================= */
+const ICONS={
+milk:'<path d="M8 9 L8 19 L16 19 L16 9 L12 5 L8 9 Z M8 12 L16 12 M12 5 L12 9"/>',
+egg:'<ellipse cx="12" cy="13" rx="5.5" ry="7"/><path d="M10 9 C9.4 10.5 9.2 12 9.2 13.5" stroke-width="1"/>',
+capsule:'<g transform="rotate(-30 12 12)"><rect x="4" y="9" width="16" height="6.5" rx="3.25"/><line x1="12" y1="9" x2="12" y2="15.5"/></g>',
+medbottle:'<path d="M9 7 L15 7 L15 10 C16.5 11 17 12.5 17 14 L17 19 L7 19 L7 14 C7 12.5 7.5 11 9 10 Z M9 7 L9 4.5 L15 4.5 L15 7 M10.5 14.5 L13.5 14.5 M12 13 L12 16"/>',
+rice:'<path d="M9 6 C9 4.5 15 4.5 15 6 M9 6 L8 19 L16 19 L15 6 M8.5 9 L15.5 9 M8.5 14 L15.5 14"/>',
+spray:'<path d="M9 9 L15 9 L15.5 19 L8.5 19 Z M10.5 9 L10.5 6 L13 6 M13 6 L15 6 L15 7.5 L13 7.5 M15.5 5 L17 4"/>',
+soap:'<path d="M10 8 L14 8 L14.5 19 L9.5 19 Z M10.5 8 L10.5 5.5 L13 5.5 L13 8 M13 4.5 L16 4.5"/>',
+apple:'<circle cx="12" cy="14" r="5.5"/><path d="M12 8.5 C12 6.5 13.5 5.5 15 5.5"/>',
+leaf:'<path d="M6 19 C6 11 11 6 19 5 C18 13 13 18 6 19 Z M6 19 C9 14 12 11 15 9"/>',
+bread:'<path d="M5 10 C5 7.5 8 6.5 12 6.5 C16 6.5 19 7.5 19 10 C19 11.2 18.2 12 17.5 12.3 L17.5 18 L6.5 18 L6.5 12.3 C5.8 12 5 11.2 5 10 Z"/>',
+can:'<ellipse cx="12" cy="6.5" rx="5" ry="2"/><path d="M7 6.5 L7 17.5 C7 18.6 9.2 19.5 12 19.5 C14.8 19.5 17 18.6 17 17.5 L17 6.5"/>',
+cup:'<path d="M6 6 L18 6 L17 19 L7 19 Z M18 8 C20 8 20 12 17.5 12"/>',
+coffee:'<path d="M5 9 L17 9 L16 19 L6 19 Z M17 10 C19.5 10 19.5 14 16.5 14"/><path d="M8 6 C8 4.8 9.2 4.8 9.2 3.6 M12 6 C12 4.8 13.2 4.8 13.2 3.6" stroke-width="1"/>',
+snack:'<circle cx="12" cy="12" r="7"/><circle cx="9.5" cy="10" r="0.7"/><circle cx="14" cy="13.5" r="0.7"/><circle cx="10.5" cy="14.5" r="0.7"/>',
+drop:'<path d="M12 4.5 C15.5 9 17.5 12 17.5 14.8 A5.5 5.5 0 0 1 6.5 14.8 C6.5 12 8.5 9 12 4.5 Z"/>',
+jar:'<path d="M8 7 L16 7 L16.5 19 L7.5 19 Z M8 7 L8 4.5 L16 4.5 L16 7"/>',
+toothbrush:'<path d="M4.5 19.5 L13 11 L16.5 7.5 M13 11 L15.5 13.5 M16.5 7.5 C17.5 6.5 19 6.5 19.5 7.5 L17 10 C16.5 10.5 15.5 10.5 15 10 Z"/>',
+tissue:'<rect x="5" y="10" width="14" height="9" rx="1.5"/><path d="M5 10 C7 8 9 8.5 10 7 C11 5.5 13 5.5 14 7 C15 8.5 17 8 19 10 M8.5 13.5 L15.5 13.5"/>',
+tshirt:'<path d="M9 5 L5 8 L7 11 L9 10 L9 19 L15 19 L15 10 L17 11 L19 8 L15 5 C14 6 13 6.5 12 6.5 C11 6.5 10 6 9 5 Z"/>',
+hanger:'<path d="M12 7 C10.9 7 10 7.9 10 9 C10 10.1 10.9 11 12 11 L12 12.5 M12 12.5 L4.5 18 C3.8 18.5 4.2 19.5 5 19.5 L19 19.5 C19.8 19.5 20.2 18.5 19.5 18 L12 12.5 Z"/>',
+blanket:'<path d="M5 7.5 H19 V10.5 H5 Z M5 10.5 H19 V13.5 H5 Z M5 13.5 H19 V16.5 H5 Z"/>',
+toolbox:'<rect x="4.5" y="9" width="15" height="9" rx="1.5"/><path d="M9 9 L9 6.5 L15 6.5 L15 9 M4.5 13 L19.5 13"/>',
+wrench:'<path d="M4.5 19.5 L13 11 M13 11 L11 9 L17 3.5 C18.5 3 20 4 19.5 5.5 L14 11.5 L13 11 Z M15 13 L20 18 L18 20 L13 15"/>',
+phone:'<rect x="8" y="4.5" width="8" height="15" rx="2"/><path d="M11 16.5 L13 16.5"/>',
+laptop:'<rect x="6" y="6" width="12" height="8.5" rx="1"/><path d="M4 17.5 L20 17.5 L18 14.5 L6 14.5 Z"/>',
+headphone:'<path d="M5 14 L5 12 C5 8.1 8.1 5 12 5 C15.9 5 19 8.1 19 12 L19 14 M5 14 C5 13 5.8 12.5 6.5 12.5 C7.3 12.5 8 13.2 8 14 L8 16.5 C8 17.3 7.3 18 6.5 18 C5.8 18 5 17.5 5 16.5 Z M19 14 C19 13 18.2 12.5 17.5 12.5 C16.7 12.5 16 13.2 16 14 L16 16.5 C16 17.3 16.7 18 17.5 18 C18.2 18 19 17.5 19 16.5 Z"/>',
+battery:'<rect x="4" y="9" width="15" height="7" rx="1.5"/><path d="M19.5 11 L21 11 L21 14 L19.5 14 M6.5 11.5 L9.5 11.5 M8 10 L8 13"/>',
+book:'<path d="M6 4.5 L17 4.5 C18 4.5 18.5 5 18.5 6 L18.5 19.5 L7.5 19.5 C6.4 19.5 5.5 18.6 5.5 17.5 L5.5 6 M5.5 17.5 C5.5 16.4 6.4 15.5 7.5 15.5 L18.5 15.5"/>',
+toy:'<rect x="5" y="12" width="6" height="6" rx="1"/><rect x="13" y="12" width="6" height="6" rx="1"/><rect x="9" y="6" width="6" height="6" rx="1"/>',
+umbrella:'<path d="M4 12.5 C4 8 7.5 4.5 12 4.5 C16.5 4.5 20 8 20 12.5 L4 12.5 Z M12 12.5 L12 17 C12 18.4 13.1 19.5 14.5 19.5 C15.9 19.5 17 18.4 17 17"/>',
+key:'<circle cx="8" cy="14" r="3.5"/><path d="M10.5 11.5 L19 3 M16 6 L18.5 8.5 M13.5 8.5 L15.5 10.5"/>',
+pan:'<circle cx="10" cy="12" r="5.5"/><path d="M15.5 12 L20.5 12"/>',
+bag:'<path d="M6 8.5 L18 8.5 L19 19.5 L5 19.5 Z M9 8.5 L9 7 C9 5.3 10.3 4 12 4 C13.7 4 15 5.3 15 7 L15 8.5"/>',
+box:'<path d="M5 10 L19 10 L18 19 L6 19 Z M4 10 L20 10 L19 7 L5 7 Z M12 7 L12 4 M10 4 L14 4"/>',
+bowl:'<path d="M5 12 L19 12 C19 16 16 19 12 19 C8 19 5 16 5 12 Z M13.5 5.5 L18.5 9.5 M16.5 4.5 L20.5 8.5"/>',
+cross:'<circle cx="12" cy="12" r="8"/><path d="M12 8.5 L12 15.5 M8.5 12 L15.5 12"/>'
+};
+function iconSvg(key,size){
+  size=size||30;
+  const inner=ICONS[key]||ICONS.box;
+  return '<svg width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">'+inner+'</svg>';
+}
+const ICON_KEYS=Object.keys(ICONS);
+
+const KW_RULES=[
+[/酸奶|鲜奶|牛奶|乳|奶昔/,"milk"],[/蛋/,"egg"],[/胶囊|霉素|药片|药丸|片剂|维生|钙片|感冒灵|板蓝根|药/,"capsule"],
+[/碘伏|酒精|消毒|喷雾/,"spray"],[/霜|乳液|精华|面膜/,"soap"],
+[/大米|面粉|杂粮|麦片|挂面/,"rice"],[/苹果|梨|香蕉|橙|葡萄|草莓|水果/,"apple"],
+[/青菜|白菜|蔬菜|葱|姜|蒜|生菜/,"leaf"],[/面包|吐司|蛋糕|馒头|包子/,"bread"],
+[/罐头/,"can"],[/咖啡/,"coffee"],[/茶|饮料|果汁|矿泉水|牛奶饮品/,"cup"],
+[/饼干|薯片|零食|糖果|巧克力|坚果/,"snack"],
+[/酱油|醋|料酒|蚝油|豆瓣酱|沙拉|香油|食用油|盐|糖|调料|调味/,"drop"],
+[/牙刷/,"toothbrush"],[/牙膏|洗面奶|洗发|沐浴|护发|洗手液|洗衣液|清洁剂/,"soap"],
+[/纸巾|抽纸|湿巾|卫生纸|卷纸/,"tissue"],
+[/衣|裤|衫|裙|毛衣|外套|袜子/,"tshirt"],[/被|褥|毯|枕/,"blanket"],[/衣架/,"hanger"],
+[/螺丝刀|扳手|锤|钳|工具|五金/,"wrench"],[/工具箱/,"toolbox"],
+[/手机|充电器|充电宝|数据线/,"phone"],[/电脑|笔记本|平板|键盘|鼠标/,"laptop"],
+[/耳机|音箱|音响/,"headphone"],[/电池/,"battery"],
+[/书|本|册|杂志/,"book"],[/玩具|积木|乐高|玩偶/,"toy"],[/伞/,"umbrella"],[/钥匙/,"key"],
+[/锅|平底锅|炒勺/,"pan"],[/袋/,"bag"],[/箱|盒|收纳/,"box"],[/瓶|罐|坛/,"jar"]
+];
+const CAT_FALLBACK={food:"bowl",med:"cross",daily:"jar",cloth:"tshirt",tool:"wrench"};
+function matchIcon(name,catId){
+  const n=(name||"").toLowerCase();
+  for(const[re,ic]of KW_RULES){if(re.test(n))return ic;}
+  return CAT_FALLBACK[catId]||"box";
+}
+
+/* ================= 效期计算 ================= */
+function thresholds(it){
+  const c=it.categoryId;
+  if(c==="med")return{red:30,yellow:90};
+  if(c==="food")return{red:3,yellow:7};
+  return{red:7,yellow:30};
+}
+function badgeInfo(it){
+  const d=daysLeft(it.expiry);
+  if(d===null)return null;
+  const t=thresholds(it);
+  const pre=(it.categoryId==="med")?"效期":"";
+  let cls,text;
+  if(d<0){cls="b-red";text="已过期 "+(-d)+" 天";}
+  else if(d<=t.red){cls="b-red";text=pre+"剩 "+d+" 天";}
+  else if(d<=t.yellow){cls="b-yellow";text=pre+"剩 "+d+" 天";}
+  else{cls="b-ok";text=d>60?pre+"剩 "+Math.round(d/30)+" 个月":pre+"剩 "+d+" 天";}
+  return{cls,text,d};
+}
+
+/* ================= 渲染 ================= */
+function scopedItems(){
+  let arr=db.items.slice();
+  if(view.room!=="all")arr=arr.filter(i=>i.roomId===view.room);
+  if(view.storage)arr=arr.filter(i=>i.storageId===view.storage);
+  if(view.cat)arr=arr.filter(i=>i.categoryId===view.cat);
+  return arr;
+}
+function visibleItems(){
+  let arr=scopedItems();
+  if(view.filter==="exp")arr=arr.filter(i=>i.expiry);
+  if(view.filter==="soon")arr=arr.filter(i=>{const b=badgeInfo(i);return b&&b.d<=thresholds(i).yellow;});
+  if(view.search){
+    const q=view.search.toLowerCase();
+    arr=arr.filter(i=>(i.name+" "+locationText(i)+" "+(i.note||"")).toLowerCase().includes(q));
+  }
+  arr.sort((a,b)=>{
+    const da=a.expiry?daysLeft(a.expiry):1e9,dbb=b.expiry?daysLeft(b.expiry):1e9;
+    if(da!==dbb)return da-dbb;
+    return a.name.localeCompare(b.name,"zh");
+  });
+  return arr;
+}
+function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+
+function ScopedCount(scope){
+  let arr=scopedItems();
+  if(scope==="all")return arr.length;
+  if(scope==="exp")return arr.filter(i=>i.expiry).length;
+  if(scope==="soon")return arr.filter(i=>{const b=badgeInfo(i);return b&&b.d<=thresholds(i).yellow;}).length;
+  return 0;
+}
+function renderNav(){
+  /* 房间芯片行 */
+  let h='<button class="nchip '+(view.room==="all"&&!view.cat&&!view.storage?"active":"")+'" data-act="room" data-id="all">全屋 <span class="cnt">'+db.items.length+'</span></button>';
+  for(const r of db.rooms){
+    const n=db.items.filter(i=>i.roomId===r.id).length;
+    h+='<button class="nchip '+(view.room===r.id&&!view.cat&&!view.storage?"active":"")+'" data-act="room" data-id="'+r.id+'">'+esc(r.name)+' <span class="cnt">'+n+'</span></button>';
+  }
+  h+='<button class="nchip" data-act="menu-open" style="background:transparent;border:0.5px dashed #B9C5B0">☰ 管理</button>';
+  document.getElementById("roomChips").innerHTML=h;
+  /* 分类 + 筛选芯片行 */
+  let c='<button class="nchip '+(view.filter==="all"?"active":"")+'" data-act="filter" data-v="all">全部 '+ScopedCount("all")+'</button>';
+  for(const cat of db.cats){
+    const n=db.items.filter(i=>i.categoryId===cat.id).length;
+    c+='<button class="nchip '+(view.cat===cat.id?"active":"")+'" data-act="cat" data-id="'+cat.id+'"><span class="cdot" style="background:'+(view.cat===cat.id?"#F3F6F1":cat.color)+'"></span>'+esc(cat.name)+' <span class="cnt">'+n+'</span></button>';
+  }
+  c+='<button class="nchip '+(view.filter==="exp"?"active":"")+'" data-act="filter" data-v="exp">效期 '+ScopedCount("exp")+'</button>';
+  c+='<button class="nchip '+(view.filter==="soon"?"active":"")+'" data-act="filter" data-v="soon">⚠ 临期 '+ScopedCount("soon")+'</button>';
+  document.getElementById("catChips").innerHTML=c;
+}
+function renderMain(){
+  let title;
+  if(view.storage){
+    const f=findStorage(view.storage);
+    title=f?f.room.name+" · "+f.s.name:"存储区";
+  }else{
+    title=view.room==="all"?"全屋总览":(getRoom(view.room)?getRoom(view.room).name:"全屋总览");
+  }
+  const cat=view.cat?getCat(view.cat):null;
+  document.getElementById("mainTitle").textContent=title+(cat?" · "+cat.name:"");
+  const arr=visibleItems();
+  let h="";
+  for(const it of arr){
+    const b=badgeInfo(it);
+    const catObj=getCat(it.categoryId);
+    const ph=(it.photos&&it.photos.length)?it.photos:[];
+    const icoArea=ph.length
+      ?'<div class="ico photo" data-act="photo-open" data-id="'+it.id+'"><img src="'+ph[0]+'" alt=""><span class="ph-cnt">'+ph.length+'</span></div>'
+      :'<div class="ico" data-act="icon-pick-item" data-id="'+it.id+'">'+iconSvg(it.icon,32)+'</div>';
+    h+='<div class="card" data-act="item-edit" data-id="'+it.id+'">'
+      +icoArea
+      +'<div class="nm">'+esc(it.name)+(it.qty?' <span style="font-weight:400;color:var(--ink3);font-size:11px">×'+it.qty+(it.unit||"")+'</span>':"")+'</div>'
+      +'<div class="loc">'+esc(locationText(it))+(catObj?' · '+esc(catObj.name):"")+'</div>'
+      +(b?'<span class="badge '+b.cls+'">'+b.text+'</span>':"")
+      +'</div>';
+  }
+  h+='<div class="add-card" data-act="item-add"><div class="plus">＋</div><div>添加物品</div></div>';
+  document.getElementById("grid").innerHTML=h;
+}
+function renderWarn(){
+  const arr=db.items.filter(i=>{const b=badgeInfo(i);return b&&b.d<=thresholds(i).yellow;})
+    .sort((a,b)=>daysLeft(a.expiry)-daysLeft(b.expiry));
+  let h='<span class="wlabel">效期提醒</span>';
+  if(!arr.length){h+='<span style="color:var(--ink3);font-size:11px">暂无临期物品</span>';}
+  else{
+    for(const it of arr.slice(0,8)){
+      const b=badgeInfo(it);
+      const cls=b.d<0||b.d<=thresholds(it).red?"red":"yellow";
+      h+='<span class="wchip '+cls+'" data-act="item-edit" data-id="'+it.id+'">'+esc(it.name)+" "+b.text+'</span>';
+    }
+  }
+  document.getElementById("warnBar").innerHTML=h;
+}
+function render(){
+  renderNav();renderMain();renderWarn();
+  const at=appTitle();
+  const atEl=document.getElementById("appTitle");
+  if(atEl)atEl.textContent=at;
+  document.title=at;
+}
+
+/* ================= 弹窗框架 ================= */
+function openModal(html){
+  document.getElementById("modalRoot").innerHTML='<div class="mask" data-mask="1"><div class="dialog">'+html+'</div></div>';
+}
+function closeModal(){document.getElementById("modalRoot").innerHTML="";}
+function dlgBtns(extra){
+  return '<div class="dlg-btns"><button class="btn-cancel" data-act="close-modal">取消</button>'+(extra||"")+'</div>';
+}
+let _confirmCb=null;
+function openConfirm(msg,okLabel,altLabel,onYes,onAlt,danger){
+  _confirmCb={onYes,onAlt};
+  openModal('<div class="dlg-title">确认操作</div><div class="confirm-msg">'+msg+'</div>'
+    +'<div class="dlg-btns">'+(altLabel?'<button class="btn-cancel" data-act="confirm-alt">'+altLabel+'</button>':"")
+    +'<button class="btn-ok '+(danger?"btn-danger":"")+'" data-act="confirm-yes">'+okLabel+'</button>'
+    +'<button class="btn-cancel" data-act="close-modal">取消</button></div>');
+}
+
+/* ================= 物品表单 ================= */
+let _itemDraft=null;
+function openItemModal(id){
+  const it=id?db.items.find(i=>i.id===id):null;
+  _itemDraft={icon:it?it.icon:null,manual:false,photos:it&&it.photos?it.photos.slice():[]};
+  const catOpts=db.cats.map(c=>'<option value="'+c.id+'" '+(it&&it.categoryId===c.id?"selected":"")+'>'+esc(c.name)+'</option>').join("");
+  const roomOpts='<option value="">未分配</option>'+db.rooms.map(r=>'<option value="'+r.id+'" '+(it&&it.roomId===r.id?"selected":"")+'>'+esc(r.name)+'</option>').join("");
+  openModal('<div class="dlg-title">'+(it?"编辑物品":"添加物品")+'</div>'
+  +'<div class="fld"><label>图标（随名称自动推荐，可点击更换）</label>'
+  +'<div class="cur-icon" id="curIcon">'+iconSvg(_itemDraft.icon||"box",30)+'</div></div>'
+  +'<div class="fld"><label>名称 *</label><input type="text" id="f_name" value="'+esc(it?it.name:"")+'" placeholder="如：鲜牛奶 1L"></div>'
+  +'<div class="row"><div class="fld"><label>数量</label><input type="number" id="f_qty" inputmode="numeric" min="0" step="any" value="'+(it&&it.qty!=null?it.qty:"")+'"></div>'
+  +'<div class="fld"><label>单位</label><input type="text" id="f_unit" value="'+esc(it?it.unit:"")+'" placeholder="个/盒/瓶"></div>'
+  +'<div class="fld"><label>分类</label><select id="f_cat">'+catOpts+'</select></div></div>'
+  +'<div class="row"><div class="fld"><label>房间</label><select id="f_room">'+roomOpts+'</select></div>'
+  +'<div class="fld"><label>存储区</label><select id="f_storage"><option value="">未指定</option></select></div></div>'
+  +'<div class="fld"><label>有效期（食品 / 药品建议填写）</label><input type="date" id="f_exp" value="'+(it&&it.expiry?it.expiry:"")+'">'
+  +'<div class="hint" id="expHint"></div></div>'
+  +'<div class="fld"><label>照片（可存多张）</label><div class="ph-edit" id="phEdit"></div>'
+  +'<button class="tag-add" data-act="photo-add-btn" type="button">＋ 添加照片</button>'
+  +'<input type="file" id="f_photos" accept="image/*" multiple hidden></div>'
+  +'<div class="fld"><label>备注</label><textarea id="f_note">'+esc(it?it.note:"")+'</textarea></div>'
+  +'<div class="dlg-btns">'+(it?'<button class="btn-danger" data-act="item-del" data-id="'+it.id+'">删除物品</button>':"")
+  +'<button class="btn-cancel" data-act="close-modal">取消</button>'
+  +'<button class="btn-ok" data-act="item-save" data-id="'+(it?it.id:"")+'">保存</button></div>');
+  refreshStorageOpts(it?it.storageId:"");
+  refreshExpHint();
+  document.getElementById("f_room").addEventListener("change",()=>refreshStorageOpts(""));
+  renderPhotoEdit();
+  document.getElementById("f_photos").addEventListener("change",e=>{
+    const files=[].slice.call(e.target.files);
+    e.target.value="";
+    let pending=files.length;
+    if(!pending)return;
+    files.forEach(f=>{
+      compressImage(f,url=>{
+        if(!url){pending--;if(!pending)renderPhotoEdit();return;}
+        _itemDraft.photos.push(url);
+        pending--;
+        if(!pending)renderPhotoEdit();
+      });
+    });
+  });
+  document.getElementById("f_name").addEventListener("input",()=>{
+    if(!_itemDraft.manual){
+      _itemDraft.icon=matchIcon(document.getElementById("f_name").value,document.getElementById("f_cat").value);
+      document.getElementById("curIcon").innerHTML=iconSvg(_itemDraft.icon||"box",30);
+    }
+  });
+  document.getElementById("f_cat").addEventListener("change",()=>{
+    if(!_itemDraft.manual){
+      _itemDraft.icon=matchIcon(document.getElementById("f_name").value,document.getElementById("f_cat").value);
+      document.getElementById("curIcon").innerHTML=iconSvg(_itemDraft.icon||"box",30);
+    }
+    refreshExpHint();
+  });
+  document.getElementById("curIcon").addEventListener("click",()=>openIconPicker(_itemDraft.icon||"box",k=>{
+    _itemDraft.icon=k;_itemDraft.manual=true;
+    document.getElementById("curIcon").innerHTML=iconSvg(k,30);
+  }));
+}
+function refreshStorageOpts(sel){
+  const rid=document.getElementById("f_room").value;
+  const selEl=document.getElementById("f_storage");
+  const r=getRoom(rid);
+  selEl.innerHTML='<option value="">未指定</option>'+(r?r.storages.map(s=>'<option value="'+s.id+'" '+(sel===s.id?"selected":"")+'>'+esc(s.name)+'</option>').join(""):"");
+}
+function refreshExpHint(){
+  const c=document.getElementById("f_cat").value;
+  const t=c==="med"?"药品：剩 30 天内红色警示，90 天内黄色警示":c==="food"?"食品：剩 3 天内红色警示，7 天内黄色警示":"其他：剩 7 天内红色警示，30 天内黄色警示";
+  document.getElementById("expHint").textContent=t;
+}
+function dupCheck(name,excludeId){
+  const n=(name||"").trim().toLowerCase();
+  if(!n)return null;
+  return db.items.find(i=>i.id!==excludeId&&(i.name||"").trim().toLowerCase()===n);
+}
+function doSaveItem(id,obj){
+  if(id){Object.assign(db.items.find(i=>i.id===id),obj);}
+  else{obj.id=uid("i");db.items.push(obj);}
+  save();closeModal();render();
+}
+function saveItem(id){
+  const name=document.getElementById("f_name").value.trim();
+  if(!name){document.getElementById("f_name").focus();return;}
+  const qtyRaw=document.getElementById("f_qty").value;
+  const obj={
+    name,
+    qty:qtyRaw===""?null:Number(qtyRaw),
+    unit:document.getElementById("f_unit").value.trim(),
+    categoryId:document.getElementById("f_cat").value,
+    roomId:document.getElementById("f_room").value||null,
+    storageId:document.getElementById("f_storage").value||null,
+    expiry:document.getElementById("f_exp").value||null,
+    note:document.getElementById("f_note").value.trim(),
+    photos:_itemDraft.photos.slice(),
+    icon:_itemDraft.icon||matchIcon(name,document.getElementById("f_cat").value)
+  };
+  const dup=dupCheck(name,id);
+  if(dup){
+    openConfirm('已存在同名物品「'+esc(dup.name)+'」<br>（'+esc(locationText(dup))+'，数量 '+(dup.qty!=null?dup.qty+(dup.unit||""):"未填")+'）<br><br>重复物品不建议录入。',
+      "仍要保存","取消（不录入）",
+      ()=>doSaveItem(id,obj),null,true);
+    return;
+  }
+  doSaveItem(id,obj);
+}
+
+/* ================= 图标选择器 ================= */
+let _pickerCb=null;
+function openIconPicker(cur,cb){
+  _pickerCb=cb;
+  const cells=ICON_KEYS.map(k=>'<button class="icell '+(k===cur?"sel":"")+'" data-act="icon-cell" data-k="'+k+'">'+iconSvg(k,22)+'</button>').join("");
+  openModal('<div class="dlg-title">选择图标</div><div class="icon-grid">'+cells+'</div>'+dlgBtns(""));
+}
+
+/* ================= 房间 / 分类 / 存储区表单 ================= */
+let _roomDraft=null;
+function openRoomModal(id){
+  const r=id?getRoom(id):null;
+  _roomDraft={id:id||null,name:r?r.name:"",storages:r?r.storages.map(s=>({id:s.id,name:s.name})):[]};
+  renderRoomModal();
+}
+function renderRoomModal(){
+  const tags=_roomDraft.storages.map((s,i)=>'<span class="tag">'+esc(s.name)+'<button data-act="storage-del" data-i="'+i+'">✕</button></span>').join("");
+  openModal('<div class="dlg-title">'+(_roomDraft.id?"编辑房间":"新增房间")+'</div>'
+  +'<div class="fld"><label>房间名称 *</label><input type="text" id="rm_name" value="'+esc(_roomDraft.name)+'" placeholder="如：厨房、阳台"></div>'
+  +'<div class="fld"><label>存储区（冰箱、橱柜等，可增删）</label><div>'+tags
+  +'<input type="text" id="rm_new" placeholder="输入名称" style="width:110px;font-size:12px;padding:4px 9px;border:0.5px dashed #B9C5B0;border-radius:12px;background:none">'
+  +'<button class="tag-add" data-act="storage-add">＋ 添加</button></div></div>'
+  +dlgBtns('<button class="btn-ok" data-act="room-save">保存</button>'));
+  const inp=document.getElementById("rm_new");
+  inp.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();addStorage();}});
+}
+function addStorage(){
+  const inp=document.getElementById("rm_new");
+  const v=inp.value.trim();
+  if(!v)return;
+  _roomDraft.storages.push({id:uid("s"),name:v});
+  renderRoomModal();
+}
+function saveRoom(){
+  const name=document.getElementById("rm_name").value.trim();
+  if(!name){document.getElementById("rm_name").focus();return;}
+  _roomDraft.name=name;
+  if(_roomDraft.id){
+    const r=getRoom(_roomDraft.id);
+    r.name=name;r.storages=_roomDraft.storages;
+  }else{
+    db.rooms.push({id:uid("r"),name:name,storages:_roomDraft.storages.slice()});
+  }
+  save();closeModal();render();
+}
+const SWATCHES=["#A8B08A","#6E8467","#9AA894","#B3B89A","#84968C","#B0A8BC","#C2A68C","#9FAAB5"];
+let _catDraft=null;
+function openCatModal(id){
+  const c=id?getCat(id):null;
+  _catDraft={id:id||null,name:c?c.name:"",color:c?c.color:SWATCHES[db.cats.length%SWATCHES.length]};
+  renderCatModal();
+}
+function renderCatModal(){
+  const sws=SWATCHES.map(s=>'<div class="sw '+(s===_catDraft.color?"sel":"")+'" style="background:'+s+'" data-act="swatch" data-c="'+s+'"></div>').join("");
+  openModal('<div class="dlg-title">'+(_catDraft.id?"编辑分类":"新增分类")+'</div>'
+  +'<div class="fld"><label>分类名称 *</label><input type="text" id="ct_name" value="'+esc(_catDraft.name)+'" placeholder="如：母婴用品"></div>'
+  +'<div class="fld"><label>标记色</label><div class="swatches">'+sws+'</div></div>'
+  +dlgBtns('<button class="btn-ok" data-act="cat-save">保存</button>'));
+}
+function saveCat(){
+  const name=document.getElementById("ct_name").value.trim();
+  if(!name){document.getElementById("ct_name").focus();return;}
+  _catDraft.name=name;
+  if(_catDraft.id){const c=getCat(_catDraft.id);c.name=name;c.color=_catDraft.color;}
+  else{db.cats.push({id:uid("c"),name,color:_catDraft.color});}
+  save();closeModal();render();
+}
+function findStorage(sid){
+  for(const r of db.rooms){const s=r.storages.find(x=>x.id===sid);if(s)return{room:r,s};}
+  return null;
+}
+let _stgDraft=null;
+function openStorageModal(sid){
+  const f=sid?findStorage(sid):null;
+  _stgDraft={id:sid||null,roomId:f?f.room.id:(db.rooms[0]?db.rooms[0].id:""),name:f?f.s.name:""};
+  renderStorageModal();
+}
+function renderStorageModal(){
+  const opts=db.rooms.map(r=>'<option value="'+r.id+'" '+(r.id===_stgDraft.roomId?"selected":"")+'>'+esc(r.name)+'</option>').join("");
+  openModal('<div class="dlg-title">'+(_stgDraft.id?"编辑存储区":"新增存储区")+'</div>'
+  +'<div class="fld"><label>所属房间</label><select id="sg_room">'+opts+'</select></div>'
+  +'<div class="fld"><label>存储区名称 *</label><input type="text" id="sg_name" value="'+esc(_stgDraft.name)+'" placeholder="如：冰箱冷藏室"></div>'
+  +dlgBtns('<button class="btn-ok" data-act="stg-save">保存</button>'));
+  document.getElementById("sg_room").addEventListener("change",e=>{_stgDraft.roomId=e.target.value;});
+}
+function saveStorageModal(){
+  const name=document.getElementById("sg_name").value.trim();
+  const roomId=document.getElementById("sg_room").value;
+  if(!name){document.getElementById("sg_name").focus();return;}
+  const room=getRoom(roomId);if(!room)return;
+  if(_stgDraft.id){
+    const f=findStorage(_stgDraft.id);if(!f)return;
+    if(f.room.id!==room.id){
+      f.room.storages=f.room.storages.filter(x=>x.id!==_stgDraft.id);
+      room.storages.push(f.s);
+      db.items.forEach(i=>{if(i.storageId===_stgDraft.id)i.roomId=room.id;});
+    }
+    f.s.name=name;
+  }else{
+    room.storages.push({id:uid("s"),name:name});
+  }
+  save();closeModal();render();
+}
+
+/* ================= 管理菜单（☰） ================= */
+function openMenuModal(){
+  let roomsH="";
+  for(const r of db.rooms){
+    const n=db.items.filter(i=>i.roomId===r.id).length;
+    roomsH+='<div class="mg-item" data-act="room" data-id="'+r.id+'"><span>'+esc(r.name)+'（'+n+'）</span>'
+      +'<span class="ops"><button data-act="room-edit" data-id="'+r.id+'">✎</button>'
+      +'<button class="del" data-act="room-del" data-id="'+r.id+'">✕</button></span></div>';
+  }
+  let stgH="";
+  for(const r of db.rooms)for(const s of r.storages){
+    stgH+='<div class="mg-item" data-act="stg-nav" data-id="'+s.id+'"><span style="color:var(--ink2);font-size:12px">'+esc(r.name+" · "+s.name)+'</span>'
+      +'<span class="ops"><button data-act="stg-edit" data-id="'+s.id+'">✎</button>'
+      +'<button class="del" data-act="stg-del" data-id="'+s.id+'">✕</button></span></div>';
+  }
+  let catsH="";
+  for(const c of db.cats){
+    const n=db.items.filter(i=>i.categoryId===c.id).length;
+    catsH+='<div class="mg-item" data-act="cat" data-id="'+c.id+'"><span><span class="cat-dot" style="background:'+c.color+'"></span>'+esc(c.name)+'（'+n+'）</span>'
+      +'<span class="ops"><button data-act="cat-edit" data-id="'+c.id+'">✎</button>'
+      +'<button class="del" data-act="cat-del" data-id="'+c.id+'">✕</button></span></div>';
+  }
+  openModal('<div class="dlg-title">☰ 管理</div>'
+  +'<div class="mg-act">'
+  +'<button data-act="title-edit">✎ 应用名称</button>'
+  +'<button data-act="room-add">＋ 新增房间</button>'
+  +'<button data-act="stg-add">＋ 新增存储区</button>'
+  +'<button data-act="cat-add">＋ 新增分类</button>'
+  +'</div>'
+  +'<div class="mg-sec">房间（点击可筛选）</div>'+roomsH
+  +'<div class="mg-sec">存储区（点击可筛选）</div>'+stgH
+  +'<div class="mg-sec">分类（点击可筛选）</div>'+catsH
+  +'<div class="mg-sec">数据</div>'
+  +'<div class="mg-act">'
+  +'<button data-act="cloud-settings">☁ 云同步设置</button>'
+  +'<button data-act="export">⬆ 导出 JSON</button>'
+  +'<button data-act="import">⬇ 导入 JSON</button>'
+  +'<button data-act="open-desktop">💻 电脑版</button>'
+  +'</div>'
+  +dlgBtns(""));
+}
+function appTitle(){return (db.settings&&db.settings.title)||"栖居收纳";}
+function openTitleModal(){
+  openModal('<div class="dlg-title">修改应用名称</div>'
+  +'<div class="fld"><label>名称（最长 12 字）</label><input type="text" id="tt_name" value="'+esc(appTitle())+'" maxlength="12"></div>'
+  +dlgBtns('<button class="btn-ok" data-act="title-save">保存</button>'));
+}
+function saveTitleModal(){
+  const v=document.getElementById("tt_name").value.trim();
+  if(!v){document.getElementById("tt_name").focus();return;}
+  if(!db.settings)db.settings={};
+  db.settings.title=v;
+  save();closeModal();render();
+}
+
+/* ================= 导入导出 ================= */
+function doExport(){
+  const blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  const d=new Date();
+  a.download="收纳数据_"+d.getFullYear()+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0")+".json";
+  a.click();URL.revokeObjectURL(a.href);
+}
+
+/* ================= 事件分发 ================= */
+document.addEventListener("click",e=>{
+  const mask=e.target.dataset&&e.target.dataset.mask;
+  if(mask){closeModal();return;}
+  const el=e.target.closest("[data-act]");
+  if(!el)return;
+  const act=el.dataset.act,id=el.dataset.id;
+  e.stopPropagation();
+  switch(act){
+    case "room":view.room=id;view.cat=null;view.storage=null;closeModal();render();break;
+    case "cat":{
+      view.cat=(view.cat===id)?null:id;
+      view.room="all";view.storage=null;
+      if(view.cat===null)closeModal();
+      render();break;}
+    case "stg-nav":{
+      view.storage=(view.storage===id)?null:id;
+      view.room="all";view.cat=null;
+      if(view.storage===null)closeModal();
+      render();break;}
+    case "stg-add":openStorageModal();break;
+    case "stg-edit":e.stopPropagation();openStorageModal(id);break;
+    case "stg-del":{
+      e.stopPropagation();
+      const f=findStorage(id);if(!f)break;
+      const sn=db.items.filter(i=>i.storageId===id).length;
+      openConfirm('删除存储区「'+esc(f.room.name+" · "+f.s.name)+'」？<br>其中 <b>'+sn+'</b> 件物品将保留在房间内（位置变为未指定）。',"删除",null,
+        ()=>{f.room.storages=f.room.storages.filter(x=>x.id!==id);
+          db.items.forEach(i=>{if(i.storageId===id)i.storageId=null;});
+          if(view.storage===id)view.storage=null;
+          save();closeModal();render();},null,true);
+      break;}
+    case "stg-save":saveStorageModal();break;
+    case "menu-open":openMenuModal();break;
+    case "open-desktop":{
+      openConfirm("即将打开电脑版页面（index.html）。<br>手机上打开电脑版仅供临时查看，日常请使用本页。","打开","",()=>{
+        try{location.href="index.html";}catch(err){}
+      });break;}
+    case "title-edit":openTitleModal();break;
+    case "title-save":saveTitleModal();break;
+    case "filter":view.filter=el.dataset.v;render();break;
+    case "room-add":openRoomModal();break;
+    case "room-edit":e.stopPropagation();openRoomModal(id);break;
+    case "room-del":{
+      e.stopPropagation();
+      const r=getRoom(id);if(!r)break;
+      const n=db.items.filter(i=>i.roomId===id).length;
+      openConfirm('删除房间「'+esc(r.name)+'」？<br>该房间还有 <b>'+n+'</b> 件物品。',
+        "一并删除",n?"物品移到未分配":"",
+        ()=>{db.rooms=db.rooms.filter(x=>x.id!==id);db.items=db.items.filter(i=>i.roomId!==id);
+          if(view.room===id)view.room="all";save();closeModal();render();},
+        ()=>{db.rooms=db.rooms.filter(x=>x.id!==id);db.items.forEach(i=>{if(i.roomId===id){i.roomId=null;i.storageId=null;}});
+          if(view.room===id)view.room="all";save();closeModal();render();},
+        true);
+      break;}
+    case "cat-add":openCatModal();break;
+    case "cat-edit":e.stopPropagation();openCatModal(id);break;
+    case "cat-del":{
+      e.stopPropagation();
+      const c=getCat(id);if(!c)break;
+      if(db.cats.length<=1){openConfirm('至少保留一个分类，无法删除。',"知道了","",()=>closeModal());break;}
+      const n=db.items.filter(i=>i.categoryId===id).length;
+      openConfirm('删除分类「'+esc(c.name)+'」？<br>该分类下 <b>'+n+'</b> 件物品将移入第一个分类。',
+        "删除",null,
+        ()=>{const fb=db.cats.find(x=>x.id!==id);
+          db.cats=db.cats.filter(x=>x.id!==id);
+          db.items.forEach(i=>{if(i.categoryId===id)i.categoryId=fb.id;});
+          if(view.cat===id)view.cat=null;
+          save();closeModal();render();},
+        null,true);
+      break;}
+    case "item-add":openItemModal();break;
+    case "item-edit":openItemModal(id);break;
+    case "item-del":{
+      e.stopPropagation();
+      const it=db.items.find(i=>i.id===id);if(!it)break;
+      openConfirm('删除物品「'+esc(it.name)+'」？此操作不可恢复。',"删除",null,
+        ()=>{db.items=db.items.filter(i=>i.id!==id);save();closeModal();render();},null,true);
+      break;}
+    case "item-save":saveItem(id||null);break;
+    case "icon-pick-item":{
+      e.stopPropagation();
+      const it=db.items.find(i=>i.id===id);if(!it)break;
+      openIconPicker(it.icon||"box",k=>{it.icon=k;save();closeModal();render();});
+      break;}
+    case "photo-open":e.stopPropagation();openPhotoViewer(id,0);break;
+    case "photo-add-btn":{const f=document.getElementById("f_photos");if(f)f.click();break;}
+    case "photo-del-draft":{
+      e.stopPropagation();
+      _itemDraft.photos.splice(Number(el.dataset.i),1);
+      renderPhotoEdit();break;}
+    case "photo-open-draft":{
+      e.stopPropagation();
+      window.open(el.src,"_blank");break;}
+    case "photo-prev":_pv.idx--;renderPhotoViewer();break;
+    case "photo-next":_pv.idx++;renderPhotoViewer();break;
+    case "photo-thumb":_pv.idx=Number(el.dataset.i);renderPhotoViewer();break;
+    case "photo-del-view":{
+      const pit=db.items.find(i=>i.id===_pv.itemId);
+      if(pit){pit.photos.splice(_pv.idx,1);save();
+        if(!pit.photos.length){closeModal();render();}
+        else{renderPhotoViewer();render();}}
+      break;}
+    case "icon-cell":{
+      e.stopPropagation();
+      if(_pickerCb){const cb=_pickerCb;_pickerCb=null;cb(el.dataset.k);}
+      closeModal();break;}
+    case "room-save":saveRoom();break;
+    case "storage-add":addStorage();break;
+    case "storage-del":{
+      e.stopPropagation();
+      _roomDraft.storages.splice(Number(el.dataset.i),1);
+      renderRoomModal();break;}
+    case "cat-save":saveCat();break;
+    case "swatch":{
+      e.stopPropagation();
+      _catDraft.color=el.dataset.c;
+      document.querySelectorAll(".sw").forEach(s=>s.classList.toggle("sel",s.dataset.c===_catDraft.color));
+      break;}
+    case "export":doExport();break;
+    case "import":document.getElementById("importFile").click();break;
+    case "store-hint-ok":{try{localStorage.setItem(KEY+"_hintDone","1")}catch(e){}document.getElementById("storeWarn").innerHTML="";break;}
+    case "cloud-settings":openCloudSettings();break;
+    case "cloud-test":cloudTestConn();break;
+    case "cloud-save":cloudSaveCfg();break;
+    case "cloud-push":cloudPush();break;
+    case "close-modal":closeModal();break;
+    case "confirm-yes":if(_confirmCb&&_confirmCb.onYes)_confirmCb.onYes();_confirmCb=null;break;
+    case "confirm-alt":if(_confirmCb&&_confirmCb.onAlt)_confirmCb.onAlt();_confirmCb=null;break;
+  }
+});
+document.getElementById("searchBox").addEventListener("input",e=>{view.search=e.target.value.trim();renderMain();});
+document.getElementById("importFile").addEventListener("change",e=>{
+  const f=e.target.files[0];if(!f)return;
+  const rd=new FileReader();
+  rd.onload=()=>{
+    try{
+      const d=JSON.parse(rd.result);
+      if(!d||!Array.isArray(d.items))throw 0;
+      if(Array.isArray(d.rooms)&&d.rooms.length>0&&Array.isArray(d.cats)){
+        db=d;save();render();
+        openConfirm('数据导入成功（整体替换），共 '+d.items.length+' 件物品。'
+          +(cloudReady()?'<br>✓ 已同步到云端数据库':'<br>⚠ 云同步未配置，请点 ☁ 配置后上传。'),"好的",null,()=>closeModal());
+      }else{
+        const r=mergeItems(d);
+        save();render();
+        openConfirm('合并导入成功，新增 '+r.added+' 件物品'+(r.skipped>0?'，跳过重复 '+r.skipped+' 件':'')+'。'
+          +(cloudReady()?'<br>✓ 已同步到云端数据库':'<br>⚠ 云同步未配置，请点 ☁ 配置后上传。'),"好的",null,()=>closeModal());
+      }
+    }catch(err){openConfirm('导入失败：文件格式不正确。',"知道了",null,()=>closeModal());}
+  };
+  rd.readAsText(f);
+  e.target.value="";
+});
+
+/* ================= 照片功能 ================= */
+function compressImage(file,cb){
+  const rd=new FileReader();
+  rd.onload=()=>{
+    const img=new Image();
+    img.onload=()=>{
+      const MAX=480;
+      let w=img.width,h=img.height;
+      if(w>MAX||h>MAX){const k=MAX/Math.max(w,h);w=Math.round(w*k);h=Math.round(h*k);}
+      const cv=document.createElement("canvas");
+      cv.width=w;cv.height=h;
+      cv.getContext("2d").drawImage(img,0,0,w,h);
+      cb(cv.toDataURL("image/jpeg",0.72));
+    };
+    img.onerror=()=>cb(null);
+    img.src=rd.result;
+  };
+  rd.readAsDataURL(file);
+}
+function renderPhotoEdit(){
+  const box=document.getElementById("phEdit");
+  if(!box)return;
+  box.innerHTML=_itemDraft.photos.map((p,i)=>
+    '<span class="ph-del"><img class="ph-thumb" src="'+p+'" data-act="photo-open-draft" data-i="'+i+'">'
+    +'<button data-act="photo-del-draft" data-i="'+i+'">✕</button></span>').join("");
+}
+let _pv={itemId:null,idx:0};
+function openPhotoViewer(id,idx){
+  const it=db.items.find(i=>i.id===id);
+  if(!it||!it.photos||!it.photos.length)return;
+  _pv={itemId:id,idx:idx||0};
+  renderPhotoViewer();
+}
+function renderPhotoViewer(){
+  const it=db.items.find(i=>i.id===_pv.itemId);
+  if(!it){closeModal();return;}
+  const ph=it.photos;
+  if(_pv.idx>=ph.length)_pv.idx=ph.length-1;
+  if(_pv.idx<0)_pv.idx=0;
+  const cur=ph[_pv.idx];
+  openModal('<div class="dlg-title">照片 · '+esc(it.name)+' <span style="font-weight:400;color:var(--ink3);font-size:11px">('+(_pv.idx+1)+'/'+ph.length+')</span></div>'
+  +'<div class="pv-main"><img src="'+cur+'" alt=""></div>'
+  +(ph.length>1?'<div class="pv-nav"><button data-act="photo-prev" '+(ph.length<2?"disabled":"")+'>‹ 上一张</button><button data-act="photo-next">下一张 ›</button></div>':"")
+  +'<div class="ph-thumbs" style="margin-bottom:6px">'+ph.map((p,i)=>'<img class="ph-thumb '+(i===_pv.idx?"cur":"")+'" src="'+p+'" data-act="photo-thumb" data-i="'+i+'">').join("")+'</div>'
+  +'<div class="dlg-btns"><button class="btn-cancel" data-act="photo-del-view">删除此照片</button><button class="btn-ok" data-act="close-modal">关闭</button></div>');
+}
+
+render();
+</script>
+</body>
+</html>

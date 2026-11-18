@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>栖居收纳 · 全屋收纳管家</title>
+<script>
+/* 设备检测：手机访问时自动跳到手机版 */
+(function(){
+  var ua=navigator.userAgent||"";
+  var mobileUA=/Android|iPhone|iPod|Mobile/i.test(ua)||(ua.indexOf("iPad")>=0)||(navigator.maxTouchPoints>1&&window.innerWidth<900);
+  if(mobileUA&&window.innerWidth<820){
+    try{location.replace("polymobile.html");}catch(e){}
+  }
+})();
+</script>
 <style>
 :root{
   --bg:#F3F6F1; --bg2:#E4EAE0; --bg3:#EAF0E6; --card:#FFFFFF;
